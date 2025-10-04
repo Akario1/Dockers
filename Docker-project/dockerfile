@@ -1,0 +1,16 @@
+FROM python:3.9-slim
+WORKDIR /usr/local/app
+
+## Install dependencies
+COPY ./dependencies/requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+## Copy files into the source code
+COPY . ./
+
+## Don't run as root
+RUN useradd app
+USER app
+
+## Run the app
+CMD [ "flask", "--app", "./application-code/app.py", "run", "--host", "0.0.0.0" ]
