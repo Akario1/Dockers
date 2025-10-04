@@ -1,0 +1,13 @@
+services:
+  web:
+    build: ./backend
+    depends_on:
+      - redis
+  redis:
+    image: "redis:alpine"
+  proxy:
+    build: ./proxy
+    depends_on:
+      - web
+    ports:
+      - "8080:80"
